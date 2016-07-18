@@ -31,10 +31,10 @@ public class Throw : MonoBehaviour
         // Find and highlight a selected object
         selected = SelectNearbyObject();
 
-        if (joint == null && device.GetTouchDown(SteamVR_Controller.ButtonMask.Trigger))
+        if (device.GetTouchDown(SteamVR_Controller.ButtonMask.Trigger))
         {
             handAnimator.SetBool("ShouldGrip", true);
-            if (selected != null)
+            if (joint == null && selected != null)
             {
                 //handCollider.enabled = false;
                 selected.transform.position = attachPoint.position;
@@ -42,10 +42,13 @@ public class Throw : MonoBehaviour
                 joint.connectedBody = throwRigidbody;
             }
         }
-        else if (joint != null && device.GetTouchUp(SteamVR_Controller.ButtonMask.Trigger))
+        else if (device.GetTouchUp(SteamVR_Controller.ButtonMask.Trigger))
         {
             handAnimator.SetBool("ShouldGrip", false);
-            StartCoroutine(ThrowObject(device));
+            if (joint != null)
+            {
+                StartCoroutine(ThrowObject(device));
+            }
         }
     }
 
