@@ -40,6 +40,7 @@ public class Throw : MonoBehaviour
                 selected.transform.position = attachPoint.position;
                 joint = selected.AddComponent<FixedJoint>();
                 joint.connectedBody = throwRigidbody;
+                joint.enableCollision = false;
             }
         }
         else if (device.GetTouchUp(SteamVR_Controller.ButtonMask.Trigger))
