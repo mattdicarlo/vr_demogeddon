@@ -9,11 +9,13 @@ public class Throw : MonoBehaviour
     public Transform attachPoint;
 
     SteamVR_TrackedObject trackedObj;
-    FixedJoint joint;
+    SpringJoint joint;
     Rigidbody throwRigidbody;
 
     public Collider handCollider;
     public GameObject handModel;
+
+    public bool shouldGrip = false;
 
     Animator handAnimator;
 
@@ -31,19 +33,23 @@ public class Throw : MonoBehaviour
         // Find and highlight a selected object
         selected = SelectNearbyObject();
 
-        if (device.GetTouchDown(SteamVR_Controller.ButtonMask.Trigger))
+        if (device.GetTouchDown(SteamVR_Controller.ButtonMask.Trigger) || shouldGrip)
         {
             handAnimator.SetBool("ShouldGrip", true);
             if (joint == null && selected != null)
             {
                 //handCollider.enabled = false;
                 selected.transform.position = attachPoint.position;
-                joint = selected.AddComponent<FixedJoint>();
+                joint = selected.AddComponent<SpringJoint>();
                 joint.connectedBody = throwRigidbody;
                 joint.enableCollision = false;
+
+                joint.spring = 500f;
+                joint.damper = 50f;
+                // joint.breakForce =
             }
         }
-        else if (device.GetTouchUp(SteamVR_Controller.ButtonMask.Trigger))
+        else if (device.GetTouchUp(SteamVR_Controller.ButtonMask.Trigger) || !shouldGrip)
         {
             handAnimator.SetBool("ShouldGrip", false);
             if (joint != null)
