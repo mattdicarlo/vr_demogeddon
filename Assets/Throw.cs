@@ -22,7 +22,7 @@ public class Throw : MonoBehaviour
     void Awake()
     {
         trackedObj = GetComponent<SteamVR_TrackedObject>();
-        throwRigidbody = GetComponent<Rigidbody>();
+        throwRigidbody = handCollider.gameObject.GetComponent<Rigidbody>();
         handAnimator = handModel.GetComponent<Animator>();
     }
 
