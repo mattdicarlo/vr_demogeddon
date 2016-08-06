@@ -4,12 +4,13 @@ using System.Collections;
 [RequireComponent(typeof(SteamVR_TrackedObject))]
 public class Throw : MonoBehaviour
 {
-    public GameObject selected;
+    [SerializeField]
+    public IGrabbable selected;
 
     public Transform attachPoint;
 
     SteamVR_TrackedObject trackedObj;
-    SpringJoint joint;
+    Joint joint;
     Rigidbody throwRigidbody;
 
     public Collider handCollider;
@@ -22,7 +23,14 @@ public class Throw : MonoBehaviour
         trackedObj = GetComponent<SteamVR_TrackedObject>();
         throwRigidbody = handCollider.gameObject.GetComponent<Rigidbody>();
         handAnimator = handModel.GetComponent<Animator>();
+
+        fake_trigger = false;
+        trigger_down = false;
     }
+
+    public bool fake_trigger;
+
+    private bool trigger_down;
 
     void FixedUpdate()
     {
@@ -31,26 +39,29 @@ public class Throw : MonoBehaviour
         // Find and highlight a selected object
         selected = SelectNearbyObject();
 
-        if (device.GetTouchDown(SteamVR_Controller.ButtonMask.Trigger))
+        if (device.GetTouchDown(SteamVR_Controller.ButtonMask.Trigger) || (!trigger_down && fake_trigger))
         {
+            trigger_down = true;
+            fake_trigger = false;
+
             handAnimator.SetBool("ShouldGrip", true);
             if (joint == null && selected != null)
             {
                 //handCollider.enabled = false;
                 //selected.transform.position = attachPoint.position;
-                joint = selected.AddComponent<SpringJoint>();
+                joint = selected.CreateGrabJoint();
                 joint.connectedBody = throwRigidbody;
                 joint.enableCollision = false;
 
-                joint.spring = 5000f;
-                joint.damper = 50f;
-
-                selected.GetComponent<Rigidbody>().useGravity = false;
+                selected.Rigidbody.useGravity = false;
                 // joint.breakForce =
             }
         }
-        else if (device.GetTouchUp(SteamVR_Controller.ButtonMask.Trigger))
+        else if (device.GetTouchUp(SteamVR_Controller.ButtonMask.Trigger) || (trigger_down && fake_trigger))
         {
+            trigger_down = false;
+            fake_trigger = false;
+
             handAnimator.SetBool("ShouldGrip", false);
             if (joint != null)
             {
@@ -94,14 +105,14 @@ public class Throw : MonoBehaviour
         //handCollider.enabled = true;
     }
 
-    private GameObject SelectNearbyObject()
+    private IGrabbable SelectNearbyObject()
     {
         Collider[] nearHandObjects = Physics.OverlapSphere(transform.position, 0.1f);
         foreach (Collider col in nearHandObjects)
         {
-            if (col.GetComponent<Rigidbody>() != null && col.gameObject.tag != "nonpickup")
+            if (col.GetComponent<IGrabbable>() != null && col.gameObject.tag != "nonpickup")
             {
-                return col.gameObject;
+                return col.GetComponent<IGrabbable>();
             }
         }
         return null;
