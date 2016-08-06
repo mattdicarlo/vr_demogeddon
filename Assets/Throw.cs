@@ -18,6 +18,12 @@ public class Throw : MonoBehaviour
 
     Animator handAnimator;
 
+    private bool heldItemShouldUseGravity = true;
+
+    // Editor Testing Flags
+    public bool fake_trigger;
+    private bool trigger_down;
+
     void Awake()
     {
         trackedObj = GetComponent<SteamVR_TrackedObject>();
@@ -27,10 +33,6 @@ public class Throw : MonoBehaviour
         fake_trigger = false;
         trigger_down = false;
     }
-
-    public bool fake_trigger;
-
-    private bool trigger_down;
 
     void FixedUpdate()
     {
@@ -53,6 +55,7 @@ public class Throw : MonoBehaviour
                 joint.connectedBody = throwRigidbody;
                 joint.enableCollision = false;
 
+                heldItemShouldUseGravity = selected.Rigidbody.useGravity;
                 selected.Rigidbody.useGravity = false;
                 // joint.breakForce =
             }
@@ -65,12 +68,12 @@ public class Throw : MonoBehaviour
             handAnimator.SetBool("ShouldGrip", false);
             if (joint != null)
             {
-                StartCoroutine(ThrowObject(device));
+                StartCoroutine(ThrowObject(device, heldItemShouldUseGravity));
             }
         }
     }
 
-    private IEnumerator ThrowObject(SteamVR_Controller.Device device)
+    private IEnumerator ThrowObject(SteamVR_Controller.Device device, bool shouldUseGravity)
     {
         var go = joint.gameObject;
         var rigidbody = go.GetComponent<Rigidbody>();
