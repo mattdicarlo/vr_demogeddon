@@ -50,7 +50,10 @@ public class Throw : MonoBehaviour
             if (joint == null && selected != null)
             {
                 //handCollider.enabled = false;
-                //selected.transform.position = attachPoint.position;
+                if (selected.MoveToGrabberWhenGrabbed)
+                {
+                    selected.Transform.position = attachPoint.position;
+                }
                 joint = selected.CreateGrabJoint();
                 joint.connectedBody = throwRigidbody;
                 joint.enableCollision = false;

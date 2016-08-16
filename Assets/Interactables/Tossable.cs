@@ -22,5 +22,15 @@ public class Tossable : MonoBehaviour, IGrabbable
         return grabJoint;
     }
 
+    public Transform Transform
+    {
+        get { return GetComponent<Transform>(); }
+    }
+
+    public bool MoveToGrabberWhenGrabbed
+    {
+        get { return true; }
+    }
+
     #endregion
 }

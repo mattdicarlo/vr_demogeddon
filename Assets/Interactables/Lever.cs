@@ -40,6 +40,16 @@ public class Lever : MonoBehaviour, IGrabbable
         return grabJoint;
     }
 
+    public Transform Transform
+    {
+        get { return GetComponent<Transform>(); }
+    }
+
+    public bool MoveToGrabberWhenGrabbed
+    {
+        get { return false; }
+    }
+
     #endregion
 }
 
