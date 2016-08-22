@@ -13,14 +13,14 @@ public class Throw : MonoBehaviour
     Joint joint;
     Rigidbody throwRigidbody;
 
-    public Collider handCollider;
+    public HandCollider handCollider;
     public GameObject handModel;
 
     Animator handAnimator;
 
     private bool heldItemShouldUseGravity = true;
 
-    public ushort vibrationBaseTime = 500;
+    public ushort vibrationBaseTime = 1000;
 
     // Editor Testing Flags
     public bool fake_trigger;
@@ -31,6 +31,7 @@ public class Throw : MonoBehaviour
         trackedObj = GetComponent<SteamVR_TrackedObject>();
         throwRigidbody = handCollider.gameObject.GetComponent<Rigidbody>();
         handAnimator = handModel.GetComponent<Animator>();
+        handCollider.ConnectedHand = this;
 
         fake_trigger = false;
         trigger_down = false;
@@ -52,7 +53,7 @@ public class Throw : MonoBehaviour
             if (joint == null && selected != null)
             {
                 selected.ConnectedHand = this;
-                //handCollider.enabled = false;
+
                 if (selected.MoveToGrabberWhenGrabbed)
                 {
                     selected.Transform.position = attachPoint.position;
