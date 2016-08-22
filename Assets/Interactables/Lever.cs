@@ -7,6 +7,7 @@ public class Lever : MonoBehaviour, IGrabbable
 {
     public HingeJoint leverHinge;
     private Rigidbody _rigidbody;
+    private Throw _controller;
 
     [SerializeField]
     public float Value
@@ -50,7 +51,20 @@ public class Lever : MonoBehaviour, IGrabbable
         get { return false; }
     }
 
+    public Throw ConnectedHand
+    {
+        set { _controller = value; }
+    }
+
     #endregion
+
+    public void OnCollisionEnter(Collision collision)
+    {
+        if (_controller != null)
+        {
+            _controller.ForceFeedback(collision.relativeVelocity.magnitude);
+        }
+    }
 }
 
 [CustomEditor(typeof(Lever))]

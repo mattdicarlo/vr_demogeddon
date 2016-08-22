@@ -20,6 +20,8 @@ public class Throw : MonoBehaviour
 
     private bool heldItemShouldUseGravity = true;
 
+    public ushort vibrationBaseTime = 500;
+
     // Editor Testing Flags
     public bool fake_trigger;
     private bool trigger_down;
@@ -49,6 +51,7 @@ public class Throw : MonoBehaviour
             handAnimator.SetBool("ShouldGrip", true);
             if (joint == null && selected != null)
             {
+                selected.ConnectedHand = this;
                 //handCollider.enabled = false;
                 if (selected.MoveToGrabberWhenGrabbed)
                 {
@@ -79,6 +82,10 @@ public class Throw : MonoBehaviour
     private IEnumerator ThrowObject(SteamVR_Controller.Device device, bool shouldUseGravity)
     {
         var go = joint.gameObject;
+
+        var grabbable = go.GetComponent<IGrabbable>();
+        grabbable.ConnectedHand = null;
+
         var rigidbody = go.GetComponent<Rigidbody>();
         rigidbody.useGravity = true;
         Object.Destroy(joint);
@@ -105,10 +112,7 @@ public class Throw : MonoBehaviour
 
         rigidbody.maxAngularVelocity = rigidbody.angularVelocity.magnitude;
 
-        yield return null;
-        yield return null;
-        yield return null;
-        //handCollider.enabled = true;
+
     }
 
     private IGrabbable SelectNearbyObject()
@@ -124,8 +128,9 @@ public class Throw : MonoBehaviour
         return null;
     }
 
-    void OnCollisionEnter(Collision collision)
+    public void ForceFeedback(float forceStrength)
     {
-        //Debug.Log("Colliding with: " + collision.gameObject.name);
+        ushort pulseLength = (ushort)(vibrationBaseTime * forceStrength);
+        SteamVR_Controller.Input((int)trackedObj.index).TriggerHapticPulse(pulseLength);
     }
 }

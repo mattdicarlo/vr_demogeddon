@@ -15,4 +15,8 @@ public interface IGrabbable
     {
         get;
     }
+    Throw ConnectedHand
+    {
+        set;
+    }
 }
