@@ -4,6 +4,7 @@ using System.Collections;
 public class Bandit : MonoBehaviour {
 
     private Lever _lever;
+    private Hopper _hopper;
     private BanditScreen _screen;
     private bool _isShowingResults;
 
@@ -11,6 +12,7 @@ public class Bandit : MonoBehaviour {
 	void Start () {
         _isShowingResults = false;
         _lever = GetComponentInChildren<Lever>();
+        _hopper = GetComponentInChildren<Hopper>();
         _screen = GetComponentInChildren<BanditScreen>();
 	}
 	
@@ -27,14 +29,15 @@ public class Bandit : MonoBehaviour {
         }
 
         _isShowingResults = true;
-        if (Random.Range(0, 100) > 90) { 
+        if (Random.Range(0, 100) > 50) { 
             _screen.setToWin();
+            StartCoroutine(_hopper.dispense());
         }
         else {
             _screen.setToLose();
         }
 
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(3);
         _screen.setToBase();
         _isShowingResults = false;
     }
