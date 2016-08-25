@@ -8,20 +8,20 @@ public class Bandit : MonoBehaviour {
     private BanditScreen _screen;
     private bool _isShowingResults;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
         _isShowingResults = false;
         _lever = GetComponentInChildren<Lever>();
         _hopper = GetComponentInChildren<Hopper>();
         _screen = GetComponentInChildren<BanditScreen>();
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	    if (_lever.Value >= 1 && !_isShowingResults) {
+    }
+    
+    // Update is called once per frame
+    void Update () {
+        if (_lever.Value >= 1 && !_isShowingResults) {
             StartCoroutine(ResultsDisplay());
         }
-	}
+    }
 
     IEnumerator ResultsDisplay() {
         if (_isShowingResults) {

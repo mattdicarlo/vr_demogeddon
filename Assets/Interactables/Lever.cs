@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Collections;
 using UnityEditor;
 
 [ExecuteInEditMode]
@@ -23,6 +22,16 @@ public class Lever : MonoBehaviour, IGrabbable
     {
         leverHinge = GetComponent<HingeJoint>();
         _rigidbody = GetComponent<Rigidbody>();
+    }
+
+    private float baseForceFeedback = 10.0f;
+
+    public void FixedUpdate()
+    {
+        if (Value > 0.8)
+        {
+            TriggerForceFeedback(Value * baseForceFeedback);
+        }
     }
 
     #region IGrabbable
@@ -60,9 +69,14 @@ public class Lever : MonoBehaviour, IGrabbable
 
     public void OnCollisionEnter(Collision collision)
     {
+        TriggerForceFeedback(collision.relativeVelocity.magnitude);
+    }
+
+    private void TriggerForceFeedback(float magnitude)
+    {
         if (_controller != null)
         {
-            _controller.ForceFeedback(collision.relativeVelocity.magnitude);
+            _controller.ForceFeedback(magnitude);
         }
     }
 }

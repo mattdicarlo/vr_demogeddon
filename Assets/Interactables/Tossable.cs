@@ -40,11 +40,12 @@ public class Tossable : MonoBehaviour, IGrabbable
 
     #endregion
 
+    private float feedbackMultiplier = 100.0f;
     public void OnCollisionEnter(Collision collision)
     {
         if (_controller != null)
         {
-            _controller.ForceFeedback(collision.relativeVelocity.magnitude);
+            _controller.ForceFeedback(feedbackMultiplier * collision.relativeVelocity.magnitude);
         }
     }
 }

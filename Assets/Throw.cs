@@ -4,6 +4,8 @@ using System.Collections;
 [RequireComponent(typeof(SteamVR_TrackedObject))]
 public class Throw : MonoBehaviour
 {
+    public const ushort MAX_PULSE_LENGTH = 3999;
+
     [SerializeField]
     public IGrabbable selected;
 
@@ -65,6 +67,8 @@ public class Throw : MonoBehaviour
                 heldItemShouldUseGravity = selected.Rigidbody.useGravity;
                 selected.Rigidbody.useGravity = false;
                 // joint.breakForce =
+
+                ForceFeedback(50);
             }
         }
         else if (device.GetTouchUp(SteamVR_Controller.ButtonMask.Trigger) || (trigger_down && fake_trigger))
@@ -118,9 +122,16 @@ public class Throw : MonoBehaviour
 
     private IGrabbable SelectNearbyObject()
     {
-        Collider[] nearHandObjects = Physics.OverlapSphere(transform.position, 0.1f);
+        Collider[] nearHandObjects = Physics.OverlapSphere(transform.position + (0.05f * transform.forward) + (-0.05f * transform.up), 0.15f);
         foreach (Collider col in nearHandObjects)
         {
+            //Debugging the 'Catch" collider range. Also a cool "painting" of cubes
+            //GameObject hit = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            //DestroyImmediate(hit.GetComponent<Collider>());
+            //hit.transform.localScale = new Vector3(0.05f, 0.05f, 0.05f);
+            //hit.transform.position = col.transform.position;
+            //Destroy(hit, 0.5f);
+
             if (col.GetComponent<IGrabbable>() != null && col.gameObject.tag != "nonpickup")
             {
                 return col.GetComponent<IGrabbable>();
@@ -129,9 +140,34 @@ public class Throw : MonoBehaviour
         return null;
     }
 
+    private bool _isForceFeedbackCoroutineRunning = false;
+    private ushort _nextFeedbackValue = 0;
+
     public void ForceFeedback(float forceStrength)
     {
         ushort pulseLength = (ushort)(vibrationBaseTime * forceStrength);
-        SteamVR_Controller.Input((int)trackedObj.index).TriggerHapticPulse(pulseLength);
+
+        if (_isForceFeedbackCoroutineRunning)
+        {
+            _nextFeedbackValue = (ushort)Mathf.Max(pulseLength, _nextFeedbackValue);
+        }
+        else
+        {
+            _isForceFeedbackCoroutineRunning = true;
+            _nextFeedbackValue = pulseLength;
+            StartCoroutine(VibrateCoroutine());
+        }
+    }
+
+    private IEnumerator VibrateCoroutine()
+    {
+        while (_nextFeedbackValue > 0)
+        {
+            ushort pulseLength = (ushort)Mathf.Min(_nextFeedbackValue, MAX_PULSE_LENGTH);
+            SteamVR_Controller.Input((int)trackedObj.index).TriggerHapticPulse(pulseLength);
+            _nextFeedbackValue -= pulseLength;
+            yield return null;
+        }
+        _isForceFeedbackCoroutineRunning = false;
     }
 }
