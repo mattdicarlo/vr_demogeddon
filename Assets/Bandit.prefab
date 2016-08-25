@@ -19,6 +19,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 4000014023863246}
+  - 114: {fileID: 114000012167997940}
   m_Layer: 0
   m_Name: Bandit
   m_TagString: Untagged
@@ -215,6 +216,7 @@ GameObject:
   - 33: {fileID: 33000011190930218}
   - 64: {fileID: 64000011917740134}
   - 23: {fileID: 23000011188094620}
+  - 114: {fileID: 114000011442708420}
   m_Layer: 0
   m_Name: screen
   m_TagString: Untagged
@@ -351,8 +353,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000010260355140}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.15, z: 0}
+  m_LocalRotation: {x: -0, y: 0.27650893, z: -0, w: 0.9610114}
+  m_LocalPosition: {x: -1.176, y: 1.15, z: -1.901}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 32.207, z: 0}
   m_Children:
@@ -847,6 +849,31 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &114000011442708420
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000014184446002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d3195a26dd6a20469d707e542a05daa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _baseImage: {fileID: 2100000, guid: 6fa22ba83fb4b344681753382821ffae, type: 2}
+  _winImage: {fileID: 2100000, guid: 1469dd18f64c24348bfcf32839c3cca1, type: 2}
+  _loseImage: {fileID: 2100000, guid: 6b2f8c1fdf2a6244f8f0e72e8889d487, type: 2}
+--- !u!114 &114000012167997940
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000010260355140}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f089baf9da349c74c9048ff3b5983850, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114000012227235662
 MonoBehaviour:
   m_ObjectHideFlags: 1
