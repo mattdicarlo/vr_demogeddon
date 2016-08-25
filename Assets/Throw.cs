@@ -4,6 +4,8 @@ using System.Collections;
 [RequireComponent(typeof(SteamVR_TrackedObject))]
 public class Throw : MonoBehaviour
 {
+    public const ushort MAX_PULSE_LENGTH = 3999;
+
     [SerializeField]
     public IGrabbable selected;
 
@@ -13,12 +15,14 @@ public class Throw : MonoBehaviour
     Joint joint;
     Rigidbody throwRigidbody;
 
-    public Collider handCollider;
+    public HandCollider handCollider;
     public GameObject handModel;
 
     Animator handAnimator;
 
     private bool heldItemShouldUseGravity = true;
+
+    public ushort vibrationBaseTime = 1000;
 
     // Editor Testing Flags
     public bool fake_trigger;
@@ -29,6 +33,7 @@ public class Throw : MonoBehaviour
         trackedObj = GetComponent<SteamVR_TrackedObject>();
         throwRigidbody = handCollider.gameObject.GetComponent<Rigidbody>();
         handAnimator = handModel.GetComponent<Animator>();
+        handCollider.ConnectedHand = this;
 
         fake_trigger = false;
         trigger_down = false;
@@ -49,8 +54,12 @@ public class Throw : MonoBehaviour
             handAnimator.SetBool("ShouldGrip", true);
             if (joint == null && selected != null)
             {
-                //handCollider.enabled = false;
-                //selected.transform.position = attachPoint.position;
+                selected.ConnectedHand = this;
+
+                if (selected.MoveToGrabberWhenGrabbed)
+                {
+                    selected.Transform.position = attachPoint.position;
+                }
                 joint = selected.CreateGrabJoint();
                 joint.connectedBody = throwRigidbody;
                 joint.enableCollision = false;
@@ -58,6 +67,8 @@ public class Throw : MonoBehaviour
                 heldItemShouldUseGravity = selected.Rigidbody.useGravity;
                 selected.Rigidbody.useGravity = false;
                 // joint.breakForce =
+
+                ForceFeedback(50);
             }
         }
         else if (device.GetTouchUp(SteamVR_Controller.ButtonMask.Trigger) || (trigger_down && fake_trigger))
@@ -76,6 +87,10 @@ public class Throw : MonoBehaviour
     private IEnumerator ThrowObject(SteamVR_Controller.Device device, bool shouldUseGravity)
     {
         var go = joint.gameObject;
+
+        var grabbable = go.GetComponent<IGrabbable>();
+        grabbable.ConnectedHand = null;
+
         var rigidbody = go.GetComponent<Rigidbody>();
         rigidbody.useGravity = true;
         Object.Destroy(joint);
@@ -102,17 +117,21 @@ public class Throw : MonoBehaviour
 
         rigidbody.maxAngularVelocity = rigidbody.angularVelocity.magnitude;
 
-        yield return null;
-        yield return null;
-        yield return null;
-        //handCollider.enabled = true;
+
     }
 
     private IGrabbable SelectNearbyObject()
     {
-        Collider[] nearHandObjects = Physics.OverlapSphere(transform.position, 0.1f);
+        Collider[] nearHandObjects = Physics.OverlapSphere(transform.position + (0.05f * transform.forward) + (-0.05f * transform.up), 0.15f);
         foreach (Collider col in nearHandObjects)
         {
+            //Debugging the 'Catch" collider range. Also a cool "painting" of cubes
+            //GameObject hit = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            //DestroyImmediate(hit.GetComponent<Collider>());
+            //hit.transform.localScale = new Vector3(0.05f, 0.05f, 0.05f);
+            //hit.transform.position = col.transform.position;
+            //Destroy(hit, 0.5f);
+
             if (col.GetComponent<IGrabbable>() != null && col.gameObject.tag != "nonpickup")
             {
                 return col.GetComponent<IGrabbable>();
@@ -121,8 +140,34 @@ public class Throw : MonoBehaviour
         return null;
     }
 
-    void OnCollisionEnter(Collision collision)
+    private bool _isForceFeedbackCoroutineRunning = false;
+    private ushort _nextFeedbackValue = 0;
+
+    public void ForceFeedback(float forceStrength)
     {
-        //Debug.Log("Colliding with: " + collision.gameObject.name);
+        ushort pulseLength = (ushort)(vibrationBaseTime * forceStrength);
+
+        if (_isForceFeedbackCoroutineRunning)
+        {
+            _nextFeedbackValue = (ushort)Mathf.Max(pulseLength, _nextFeedbackValue);
+        }
+        else
+        {
+            _isForceFeedbackCoroutineRunning = true;
+            _nextFeedbackValue = pulseLength;
+            StartCoroutine(VibrateCoroutine());
+        }
+    }
+
+    private IEnumerator VibrateCoroutine()
+    {
+        while (_nextFeedbackValue > 0)
+        {
+            ushort pulseLength = (ushort)Mathf.Min(_nextFeedbackValue, MAX_PULSE_LENGTH);
+            SteamVR_Controller.Input((int)trackedObj.index).TriggerHapticPulse(pulseLength);
+            _nextFeedbackValue -= pulseLength;
+            yield return null;
+        }
+        _isForceFeedbackCoroutineRunning = false;
     }
 }
