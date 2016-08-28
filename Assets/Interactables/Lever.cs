@@ -60,8 +60,14 @@ public class Lever : MonoBehaviour, IGrabbable
         get { return false; }
     }
 
+    public float BreakForce
+    {
+        get { return Mathf.Infinity; }
+    }
+
     public Throw ConnectedHand
     {
+        get { return _controller; }
         set { _controller = value; }
     }
 

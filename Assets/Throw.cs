@@ -54,21 +54,38 @@ public class Throw : MonoBehaviour
             handAnimator.SetBool("ShouldGrip", true);
             if (joint == null && selected != null)
             {
-                selected.ConnectedHand = this;
-
-                if (selected.MoveToGrabberWhenGrabbed)
+                var heldItem = selected;
+                if (heldItem.ConnectedHand != null)
                 {
-                    selected.Transform.position = attachPoint.position;
+                    heldItem.ConnectedHand.DropObject(heldItem, 0);
                 }
-                joint = selected.CreateGrabJoint();
+                heldItem.ConnectedHand = this;
+
+                if (heldItem.MoveToGrabberWhenGrabbed)
+                {
+                    var collider = heldItem.Transform.GetComponent<SphereCollider>();
+                    if (collider)
+                    {
+                        var direction = -attachPoint.up;
+                        // this is gross
+                        var translation = direction.normalized * (collider.radius * heldItem.Transform.localScale.x);
+                        heldItem.Transform.position = attachPoint.position + translation;
+                    }
+                    else
+                    {
+                        heldItem.Transform.position = attachPoint.position;
+                    }
+                }
+                joint = heldItem.CreateGrabJoint();
                 joint.connectedBody = throwRigidbody;
                 joint.enableCollision = false;
 
-                heldItemShouldUseGravity = selected.Rigidbody.useGravity;
-                selected.Rigidbody.useGravity = false;
-                // joint.breakForce =
+                heldItemShouldUseGravity = heldItem.Rigidbody.useGravity;
+                heldItem.Rigidbody.useGravity = false;
+                joint.breakForce = heldItem.BreakForce;
 
                 ForceFeedback(50);
+                Debug.Log(name + " FixedUpdate heldItemShouldUseGravity=" + heldItemShouldUseGravity);
             }
         }
         else if (device.GetTouchUp(SteamVR_Controller.ButtonMask.Trigger) || (trigger_down && fake_trigger))
@@ -86,13 +103,14 @@ public class Throw : MonoBehaviour
 
     private IEnumerator ThrowObject(SteamVR_Controller.Device device, bool shouldUseGravity)
     {
+        Debug.Log(name + " ThrowObject shouldUseGravity=" + shouldUseGravity);
         var go = joint.gameObject;
 
         var grabbable = go.GetComponent<IGrabbable>();
         grabbable.ConnectedHand = null;
 
         var rigidbody = go.GetComponent<Rigidbody>();
-        rigidbody.useGravity = true;
+        rigidbody.useGravity = shouldUseGravity;
         Object.Destroy(joint);
         joint = null;
 
@@ -118,6 +136,21 @@ public class Throw : MonoBehaviour
         rigidbody.maxAngularVelocity = rigidbody.angularVelocity.magnitude;
 
 
+    }
+
+    public void DropObject(IGrabbable objToDrop, float breakForce)
+    {
+        Debug.Log(name + " DropObject heldItemShouldUseGravity=" + heldItemShouldUseGravity);
+        if (objToDrop != null)
+        {
+            objToDrop.ConnectedHand = null;
+            if (joint)
+            {
+                Destroy(joint);
+                joint = null;
+            }
+            objToDrop.Rigidbody.useGravity = heldItemShouldUseGravity;
+        }
     }
 
     private IGrabbable SelectNearbyObject()
