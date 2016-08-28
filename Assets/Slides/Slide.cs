@@ -11,8 +11,11 @@ public class Slide : Tossable
 
     public SlideProjector slideProjector;
 
-    public void OnJointBreak(float breakForce)
+    public override void OnJointBreak(float breakForce)
     {
-        slideProjector.NotifyJointBroken();
+        if (slideProjector)
+        {
+            slideProjector.NotifyJointBroken();
+        }
     }
 }

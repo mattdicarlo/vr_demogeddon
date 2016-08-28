@@ -57,7 +57,7 @@ public class Tossable : MonoBehaviour, IGrabbable
         }
     }
 
-    void OnJointBreak(float breakForce)
+    public virtual void OnJointBreak(float breakForce)
     {
         if (_controller)
         {

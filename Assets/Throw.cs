@@ -63,14 +63,23 @@ public class Throw : MonoBehaviour
 
                 if (heldItem.MoveToGrabberWhenGrabbed)
                 {
-                    var collider = heldItem.Transform.GetComponent<SphereCollider>();
-                    if (collider)
+                    var collider = heldItem.Transform.GetComponent<Collider>();
+                    if (collider && collider.GetType() == typeof(SphereCollider))
                     {
+                        var sphere = collider as SphereCollider;
                         var direction = -attachPoint.up;
                         // this is gross
-                        var translation = direction.normalized * (collider.radius * heldItem.Transform.localScale.x);
+                        var translation = direction.normalized * (sphere.radius * heldItem.Transform.localScale.x);
                         heldItem.Transform.position = attachPoint.position + translation;
                     }
+                    //if (collider && collider.GetType() == typeof(BoxCollider))
+                    //{
+                    //    var box = collider as BoxCollider;
+                    //    var direction = -attachPoint.up;
+                    //    var maxbound = Mathf.Max(new float[] { box.bounds.max.x, box.bounds.max.y, box.bounds.max.z });
+                    //    var translation = direction.normalized * maxbound;
+                    //    heldItem.Transform.position = attachPoint.position + translation;
+                    //}
                     else
                     {
                         heldItem.Transform.position = attachPoint.position;
@@ -106,15 +115,15 @@ public class Throw : MonoBehaviour
         Debug.Log(name + " ThrowObject shouldUseGravity=" + shouldUseGravity);
         var go = joint.gameObject;
 
-        var grabbable = go.GetComponent<IGrabbable>();
-        grabbable.ConnectedHand = null;
-
         var rigidbody = go.GetComponent<Rigidbody>();
         rigidbody.useGravity = shouldUseGravity;
         Object.Destroy(joint);
         joint = null;
 
         yield return null;
+
+        var grabbable = go.GetComponent<IGrabbable>();
+        grabbable.ConnectedHand = null;
 
         // We should probably apply the offset between trackedObj.transform.position
         // and device.transform.pos to insert into the physics sim at the correct

@@ -11,6 +11,9 @@ public class SlideProjector : MonoBehaviour
     [SerializeField]
     private Transform _slideSlot;
 
+    [SerializeField]
+    private GameObject _slideGhost;
+
     private Rigidbody _rigidbody;
 
     [SerializeField]
@@ -37,10 +40,17 @@ public class SlideProjector : MonoBehaviour
     {
         _selected = SelectNearbySlide();
 
+        _slideGhost.SetActive(_selected != null && currentSlide == null);
+
         if (currentSlide == null && _selected != null)
         {
+            if (_selected.ConnectedHand)
+            {
+                return;
+            }
             currentSlide = _selected;
             currentSlide.Transform.position = _slideSlot.position;
+            currentSlide.Transform.rotation = _slideGhost.transform.rotation;
             var joint = currentSlide.CreateGrabJoint();
             joint.connectedBody = _rigidbody;
             joint.enableCollision = false;
@@ -74,7 +84,6 @@ public class SlideProjector : MonoBehaviour
 
     private Slide SelectNearbySlide()
     {
-        // Collider[] nearHandObjects = Physics.OverlapSphere(transform.position + (0.05f * transform.forward) + (-0.05f * transform.up), 0.15f);
         Collider[] nearProjectorObjects = Physics.OverlapSphere(_slideSlot.position, 0.15f);
         foreach (Collider col in nearProjectorObjects)
         {
@@ -90,5 +99,6 @@ public class SlideProjector : MonoBehaviour
     {
         currentSlide.Rigidbody.useGravity = true;
         currentSlide.slideProjector = null;
+        currentSlide = null;
     }
 }

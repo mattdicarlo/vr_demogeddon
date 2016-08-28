@@ -162,7 +162,6 @@ GameObject:
   m_Component:
   - 4: {fileID: 4000012770795290}
   - 33: {fileID: 33000011026336428}
-  - 65: {fileID: 65000011352704216}
   - 23: {fileID: 23000010350519854}
   m_Layer: 0
   m_Name: SlideGhost
@@ -681,18 +680,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!65 &65000011352704216
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000013032518356}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!65 &65000013494377472
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -735,6 +722,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _nextSlideLever: {fileID: 114000010447474830}
   _slideSlot: {fileID: 4000011514277110}
+  _slideGhost: {fileID: 1000013032518356}
   screenMaterial: {fileID: 2100000, guid: 4bc954b4df759430ca1fef41edd7d3b7, type: 2}
 --- !u!114 &114000010447474830
 MonoBehaviour:
