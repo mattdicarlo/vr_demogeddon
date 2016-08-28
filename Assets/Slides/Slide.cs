@@ -8,4 +8,11 @@ public class Slide : Tossable
         get { return slideImage.texture; }
     }
     public RawImage slideImage;
+
+    public SlideProjector slideProjector;
+
+    public void OnJointBreak(float breakForce)
+    {
+        slideProjector.NotifyJointBroken();
+    }
 }

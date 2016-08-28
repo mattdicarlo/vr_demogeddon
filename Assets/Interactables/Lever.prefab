@@ -43,6 +43,7 @@ GameObject:
   - 23: {fileID: 23000013304836024}
   - 54: {fileID: 54000013525488820}
   - 59: {fileID: 59000012665560044}
+  - 114: {fileID: 114000010248621162}
   m_Layer: 0
   m_Name: Handle
   m_TagString: Untagged
@@ -76,7 +77,6 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 4000012268259968}
-  - 114: {fileID: 114000010643334102}
   m_Layer: 0
   m_Name: Lever
   m_TagString: Untagged
@@ -321,17 +321,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &114000010643334102
+--- !u!114 &114000010248621162
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000012208137684}
+  m_GameObject: {fileID: 1000011080640332}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 777aa252b0b034060ab154c7ad6c508c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  leverHinge: {fileID: 0}
 --- !u!136 &136000010035324978
 CapsuleCollider:
   m_ObjectHideFlags: 1
