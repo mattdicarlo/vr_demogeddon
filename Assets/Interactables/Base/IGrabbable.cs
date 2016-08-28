@@ -17,6 +17,10 @@ public interface IGrabbable
     }
     Throw ConnectedHand
     {
-        set;
+        get; set;
+    }
+    float BreakForce
+    {
+        get;
     }
 }
