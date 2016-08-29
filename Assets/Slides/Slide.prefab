@@ -217,7 +217,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa9ea8031457c4f138f478aba5260711, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moveToGrabberWhenGrabbed: 0
+  breakForce: Infinity
   slideImage: {fileID: 114000011788623096}
+  slideProjector: {fileID: 0}
 --- !u!222 &222000013955536150
 CanvasRenderer:
   m_ObjectHideFlags: 1
