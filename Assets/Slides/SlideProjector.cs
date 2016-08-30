@@ -49,17 +49,17 @@ public class SlideProjector : MonoBehaviour
                 return;
             }
             currentSlide = _selected;
-            currentSlide.Transform.position = _slideSlot.position;
+            currentSlide.Transform.position = _slideGhost.transform.position;
             currentSlide.Transform.rotation = _slideGhost.transform.rotation;
             var joint = currentSlide.CreateGrabJoint();
             joint.connectedBody = _rigidbody;
             joint.enableCollision = false;
             joint.breakForce = 1000.0f;
-            currentSlide.Rigidbody.useGravity = false;
+            //currentSlide.Rigidbody.useGravity = false;
             currentSlide.slideProjector = this;
         }
 
-        if (_nextSlideLever.Value > 0.8f)
+        if (_nextSlideLever.Value > _nextSlideLever.actuationPoint)
         {
             NextSlide();
         }

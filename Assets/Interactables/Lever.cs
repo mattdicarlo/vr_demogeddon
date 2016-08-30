@@ -4,6 +4,9 @@ using UnityEditor;
 [ExecuteInEditMode]
 public class Lever : MonoBehaviour, IGrabbable
 {
+    [SerializeField]
+    private float _actuationPoint = 0.8f;
+
     public HingeJoint leverHinge;
     private Rigidbody _rigidbody;
     private Throw _controller;
@@ -28,7 +31,7 @@ public class Lever : MonoBehaviour, IGrabbable
 
     public void FixedUpdate()
     {
-        if (Value > 0.8)
+        if (Value > _actuationPoint)
         {
             TriggerForceFeedback(Value * baseForceFeedback);
         }
@@ -85,14 +88,20 @@ public class Lever : MonoBehaviour, IGrabbable
             _controller.ForceFeedback(magnitude);
         }
     }
-}
 
-[CustomEditor(typeof(Lever))]
-public class LeverEditor : Editor
-{
-    public override void OnInspectorGUI()
+    public float actuationPoint
     {
-        Lever myTarget = (Lever)target;
-        EditorGUILayout.Slider("Value", myTarget.Value, 0, 1);
+        get { return _actuationPoint; }
     }
 }
+
+//[CustomEditor(typeof(Lever))]
+//public class LeverEditor : Editor
+//{
+//    public override void OnInspectorGUI()
+//    {
+//        Lever myTarget = (Lever)target;
+//        EditorGUILayout.Slider("Value", myTarget.Value, 0, 1);
+//        myTarget.actuationPoint = EditorGUILayout.FloatField("Actuation Point", myTarget.actuationPoint);
+//    }
+//}
