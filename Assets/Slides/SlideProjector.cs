@@ -27,15 +27,6 @@ public class SlideProjector : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody>();
     }
 
-    public void Update ()
-    {
-        if (Input.GetMouseButtonUp(0))
-        {
-            Debug.Log("Left mouse clicked");
-            NextSlide();
-        }
-    }
-
     public void FixedUpdate()
     {
         _selected = SelectNearbySlide();

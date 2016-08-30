@@ -5,9 +5,18 @@ public class Slide : Tossable
 {
     public Texture SlideTexture
     {
-        get { return slideImage.texture; }
+        get
+        {
+            if (projectedTexture == null)
+            {
+                return slideImage.texture;
+            }
+            return projectedTexture;
+        }
     }
     public RawImage slideImage;
+
+    public Texture projectedTexture;
 
     public SlideProjector slideProjector;
 
