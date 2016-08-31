@@ -14,6 +14,9 @@ public class SlideProjector : MonoBehaviour
     [SerializeField]
     private GameObject _slideGhost;
 
+    [SerializeField]
+    private GameObject _spawnGhost;
+
     private Rigidbody _rigidbody;
 
     [SerializeField]
@@ -91,5 +94,12 @@ public class SlideProjector : MonoBehaviour
         currentSlide.Rigidbody.useGravity = true;
         currentSlide.slideProjector = null;
         currentSlide = null;
+    }
+
+    public void SpawnSlide(Slide newSlide)
+    {
+        newSlide.transform.position = _spawnGhost.transform.position;
+        newSlide.transform.rotation = _spawnGhost.transform.rotation;
+        newSlide.AnimateMe();
     }
 }

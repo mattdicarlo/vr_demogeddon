@@ -220,6 +220,7 @@ MonoBehaviour:
   moveToGrabberWhenGrabbed: 0
   breakForce: Infinity
   slideImage: {fileID: 114000011788623096}
+  projectedTexture: {fileID: 0}
   slideProjector: {fileID: 0}
 --- !u!222 &222000013955536150
 CanvasRenderer:

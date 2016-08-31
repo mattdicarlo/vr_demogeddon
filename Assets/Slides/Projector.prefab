@@ -304,7 +304,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1000013061643202
 GameObject:
   m_ObjectHideFlags: 1
@@ -432,8 +432,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000011291751084}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.017604828, y: 1.033, z: 0.486}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -1.28, y: 1.033, z: 0.63}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
@@ -576,7 +576,7 @@ Transform:
   m_GameObject: {fileID: 1000011240671702}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 3.75}
-  m_LocalScale: {x: 3.2, y: 1.8, z: 1}
+  m_LocalScale: {x: 2.89536, y: 1.6286399, z: 0.9048}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 4000010423698616}
@@ -1334,7 +1334,7 @@ HingeJoint:
   m_Anchor: {x: 0, y: 0, z: 10}
   m_Axis: {x: 0, y: 1, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 1.4210855e-13, y: -0.5000012, z: -0.000001192093}
+  m_ConnectedAnchor: {x: 1.4210855e-13, y: -0.5000012, z: -0.0000008940698}
   m_UseSpring: 1
   m_Spring:
     spring: 500
@@ -1435,6 +1435,7 @@ MonoBehaviour:
   _nextSlideLever: {fileID: 114000010447474830}
   _slideSlot: {fileID: 4000013344533972}
   _slideGhost: {fileID: 1000011698376610}
+  _spawnGhost: {fileID: 1000013032518356}
   screenMaterial: {fileID: 2100000, guid: 4bc954b4df759430ca1fef41edd7d3b7, type: 2}
 --- !u!114 &114000010447474830
 MonoBehaviour:
