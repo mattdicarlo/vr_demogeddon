@@ -37,6 +37,7 @@ GameObject:
   - 33: {fileID: 33000011224263998}
   - 23: {fileID: 23000010891252820}
   - 95: {fileID: 95000012092206038}
+  - 64: {fileID: 64000010807579856}
   m_Layer: 0
   m_Name: XY_Eevee
   m_TagString: Untagged
@@ -108,6 +109,18 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000011401051084}
+  m_Mesh: {fileID: 4300000, guid: 8cc3fce7bbc5f4cfb988f44e5c89478b, type: 3}
+--- !u!64 &64000010807579856
+MeshCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000011401051084}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Convex: 1
   m_Mesh: {fileID: 4300000, guid: 8cc3fce7bbc5f4cfb988f44e5c89478b, type: 3}
 --- !u!95 &95000012092206038
 Animator:

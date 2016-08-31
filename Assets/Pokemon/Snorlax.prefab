@@ -21,6 +21,7 @@ GameObject:
   - 4: {fileID: 4000011827193838}
   - 33: {fileID: 33000014035909674}
   - 23: {fileID: 23000011210883166}
+  - 64: {fileID: 64000012789371710}
   m_Layer: 0
   m_Name: kabigon_mat_2
   m_TagString: Untagged
@@ -38,6 +39,7 @@ GameObject:
   - 4: {fileID: 4000011105119214}
   - 33: {fileID: 33000014242669224}
   - 23: {fileID: 23000013136747444}
+  - 64: {fileID: 64000012696614202}
   m_Layer: 0
   m_Name: kabigon_mat_5
   m_TagString: Untagged
@@ -71,6 +73,7 @@ GameObject:
   - 4: {fileID: 4000011817334830}
   - 33: {fileID: 33000014045615136}
   - 23: {fileID: 23000012802571466}
+  - 135: {fileID: 135000013928867966}
   m_Layer: 0
   m_Name: kabigon_mat_3
   m_TagString: Untagged
@@ -88,6 +91,7 @@ GameObject:
   - 4: {fileID: 4000013909801138}
   - 33: {fileID: 33000013698452004}
   - 23: {fileID: 23000012685496408}
+  - 64: {fileID: 64000011383025852}
   m_Layer: 0
   m_Name: kabigon_mat_4
   m_TagString: Untagged
@@ -120,6 +124,7 @@ GameObject:
   - 4: {fileID: 4000014264467238}
   - 33: {fileID: 33000013895112670}
   - 23: {fileID: 23000011327346944}
+  - 64: {fileID: 64000013319603116}
   m_Layer: 0
   m_Name: kabigon_mat_0
   m_TagString: Untagged
@@ -190,7 +195,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000012326060534}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -404,6 +409,54 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000010497307446}
   m_Mesh: {fileID: 4300008, guid: 9dc35bb75b1f0496ba7fefddf7d48742, type: 3}
+--- !u!64 &64000011383025852
+MeshCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000012191702354}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Convex: 1
+  m_Mesh: {fileID: 4300004, guid: 9dc35bb75b1f0496ba7fefddf7d48742, type: 3}
+--- !u!64 &64000012696614202
+MeshCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000010497307446}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Convex: 1
+  m_Mesh: {fileID: 4300008, guid: 9dc35bb75b1f0496ba7fefddf7d48742, type: 3}
+--- !u!64 &64000012789371710
+MeshCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000010195866178}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Convex: 1
+  m_Mesh: {fileID: 4300006, guid: 9dc35bb75b1f0496ba7fefddf7d48742, type: 3}
+--- !u!64 &64000013319603116
+MeshCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000012487569670}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Convex: 1
+  m_Mesh: {fileID: 4300000, guid: 9dc35bb75b1f0496ba7fefddf7d48742, type: 3}
 --- !u!95 &95000014270699732
 Animator:
   serializedVersion: 3
@@ -421,3 +474,15 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!135 &135000013928867966
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000011373323430}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 7
+  m_Center: {x: 0, y: 6.5, z: -3}

@@ -37,6 +37,7 @@ GameObject:
   - 4: {fileID: 4000011365931440}
   - 33: {fileID: 33000012602670862}
   - 23: {fileID: 23000014146828120}
+  - 64: {fileID: 64000010948479406}
   m_Layer: 0
   m_Name: mew_mat_0
   m_TagString: Untagged
@@ -69,6 +70,7 @@ GameObject:
   - 4: {fileID: 4000011735083686}
   - 33: {fileID: 33000013777988346}
   - 23: {fileID: 23000011328568560}
+  - 64: {fileID: 64000012095260528}
   m_Layer: 0
   m_Name: mew_mat_1
   m_TagString: Untagged
@@ -202,6 +204,30 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000012809428486}
+  m_Mesh: {fileID: 4300002, guid: dc6002ff7a02a49b6a28c152ce71e7c4, type: 3}
+--- !u!64 &64000010948479406
+MeshCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000011916939888}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Convex: 1
+  m_Mesh: {fileID: 4300000, guid: dc6002ff7a02a49b6a28c152ce71e7c4, type: 3}
+--- !u!64 &64000012095260528
+MeshCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000012809428486}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Convex: 1
   m_Mesh: {fileID: 4300002, guid: dc6002ff7a02a49b6a28c152ce71e7c4, type: 3}
 --- !u!95 &95000013030051024
 Animator:
