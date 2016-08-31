@@ -355,9 +355,9 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000010260355140}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.80993545, y: 1.15, z: -1.9622762}
+  m_LocalPosition: {x: -0.99, y: 1.15, z: -2}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 32.207, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 4000010290924342}
   - {fileID: 4000014243939866}
@@ -550,7 +550,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 1193f92bb19bd6d47895bdc2fb9dc775, type: 2}
+  - {fileID: 2100000, guid: ecb3f81098c71244fac59711c8676c74, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_ProbeAnchor: {fileID: 0}
@@ -756,7 +756,7 @@ HingeJoint:
   m_Anchor: {x: 0, y: -5.81, z: 0}
   m_Axis: {x: 0, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.10903541, y: 0.45206186, z: 0.043494515}
+  m_ConnectedAnchor: {x: 0.10903541, y: 0.4520656, z: 0.043494515}
   m_UseSpring: 1
   m_Spring:
     spring: 25
@@ -886,6 +886,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 777aa252b0b034060ab154c7ad6c508c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _actuationPoint: 0.8
   leverHinge: {fileID: 59000011792036812}
 --- !u!114 &114000012457409092
 MonoBehaviour:
@@ -898,7 +899,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8078fd21707f37489d854d9785ca3df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _itemToDispense: {fileID: 1000013555833116, guid: 8ec5cd5f59c63e1429b7670bb9d93b00,
+  _itemToDispense: {fileID: 1000013555833116, guid: 55add704bb037477ebcc5d300601a391,
     type: 2}
 --- !u!135 &135000013149213450
 SphereCollider:

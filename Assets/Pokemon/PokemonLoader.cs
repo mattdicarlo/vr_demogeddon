@@ -18,16 +18,19 @@ public class PokemonLoader : MonoBehaviour
         poke.transform.parent = this.transform;
 
         pokeAnimator = GetComponent<Animator>();
+        pokeAnimator.enabled = false;
     }
 
     public void OnCollisionEnter(Collision collision)
     {
         Pokeball hitBall = collision.gameObject.GetComponent<Pokeball>();
-        if (hitBall != null)
+        if (hitBall != null && collision.relativeVelocity.magnitude >= 1)
         {
+            Debug.Log("Hit by pokeball");
+            pokeAnimator.enabled = true;
             pokeAnimator.SetBool("catch", true);
             hitBall.CatchAnimation();
-            Destroy(this, 3);
+            Destroy(this.gameObject, .5f);
         }
     }
 }
