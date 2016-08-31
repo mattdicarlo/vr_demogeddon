@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System;
 
 [RequireComponent(typeof(SteamVR_TrackedObject))]
 public class Throw : MonoBehaviour
@@ -117,7 +118,7 @@ public class Throw : MonoBehaviour
 
         var rigidbody = go.GetComponent<Rigidbody>();
         rigidbody.useGravity = shouldUseGravity;
-        Object.Destroy(joint);
+        GameObject.Destroy(joint);
         joint = null;
 
         yield return null;
@@ -162,9 +163,17 @@ public class Throw : MonoBehaviour
         }
     }
 
+    private int DistanceCompare(Collider one, Collider two) 
+    {
+        var distOne = (one.transform.position - transform.position).sqrMagnitude;
+        var distTwo = (two.transform.position - transform.position).sqrMagnitude;
+        return distOne.CompareTo(distTwo);
+    }
+
     private IGrabbable SelectNearbyObject()
     {
         Collider[] nearHandObjects = Physics.OverlapSphere(transform.position + (0.05f * transform.forward) + (-0.05f * transform.up), 0.15f);
+        Array.Sort(nearHandObjects, DistanceCompare);
         foreach (Collider col in nearHandObjects)
         {
             //Debugging the 'Catch" collider range. Also a cool "painting" of cubes
