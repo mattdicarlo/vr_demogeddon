@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System;
 
 [RequireComponent(typeof(SteamVR_TrackedObject))]
 public class Throw : MonoBehaviour
@@ -54,21 +55,47 @@ public class Throw : MonoBehaviour
             handAnimator.SetBool("ShouldGrip", true);
             if (joint == null && selected != null)
             {
-                selected.ConnectedHand = this;
-
-                if (selected.MoveToGrabberWhenGrabbed)
+                var heldItem = selected;
+                if (heldItem.ConnectedHand != null)
                 {
-                    selected.Transform.position = attachPoint.position;
+                    heldItem.ConnectedHand.DropObject(heldItem, 0);
                 }
-                joint = selected.CreateGrabJoint();
+                heldItem.ConnectedHand = this;
+
+                if (heldItem.MoveToGrabberWhenGrabbed)
+                {
+                    var collider = heldItem.Transform.GetComponent<Collider>();
+                    if (collider && collider.GetType() == typeof(SphereCollider))
+                    {
+                        var sphere = collider as SphereCollider;
+                        var direction = -attachPoint.up;
+                        // this is gross
+                        var translation = direction.normalized * (sphere.radius * heldItem.Transform.localScale.x);
+                        heldItem.Transform.position = attachPoint.position + translation;
+                    }
+                    //if (collider && collider.GetType() == typeof(BoxCollider))
+                    //{
+                    //    var box = collider as BoxCollider;
+                    //    var direction = -attachPoint.up;
+                    //    var maxbound = Mathf.Max(new float[] { box.bounds.max.x, box.bounds.max.y, box.bounds.max.z });
+                    //    var translation = direction.normalized * maxbound;
+                    //    heldItem.Transform.position = attachPoint.position + translation;
+                    //}
+                    else
+                    {
+                        heldItem.Transform.position = attachPoint.position;
+                    }
+                }
+                joint = heldItem.CreateGrabJoint();
                 joint.connectedBody = throwRigidbody;
                 joint.enableCollision = false;
 
-                heldItemShouldUseGravity = selected.Rigidbody.useGravity;
-                selected.Rigidbody.useGravity = false;
-                // joint.breakForce =
+                heldItemShouldUseGravity = heldItem.Rigidbody.useGravity;
+                heldItem.Rigidbody.useGravity = false;
+                joint.breakForce = heldItem.BreakForce;
 
                 ForceFeedback(50);
+                Debug.Log(name + " FixedUpdate heldItemShouldUseGravity=" + heldItemShouldUseGravity);
             }
         }
         else if (device.GetTouchUp(SteamVR_Controller.ButtonMask.Trigger) || (trigger_down && fake_trigger))
@@ -86,17 +113,18 @@ public class Throw : MonoBehaviour
 
     private IEnumerator ThrowObject(SteamVR_Controller.Device device, bool shouldUseGravity)
     {
+        Debug.Log(name + " ThrowObject shouldUseGravity=" + shouldUseGravity);
         var go = joint.gameObject;
 
-        var grabbable = go.GetComponent<IGrabbable>();
-        grabbable.ConnectedHand = null;
-
         var rigidbody = go.GetComponent<Rigidbody>();
-        rigidbody.useGravity = true;
-        Object.Destroy(joint);
+        rigidbody.useGravity = shouldUseGravity;
+        GameObject.Destroy(joint);
         joint = null;
 
         yield return null;
+
+        var grabbable = go.GetComponent<IGrabbable>();
+        grabbable.ConnectedHand = null;
 
         // We should probably apply the offset between trackedObj.transform.position
         // and device.transform.pos to insert into the physics sim at the correct
@@ -120,9 +148,32 @@ public class Throw : MonoBehaviour
 
     }
 
+    public void DropObject(IGrabbable objToDrop, float breakForce)
+    {
+        Debug.Log(name + " DropObject heldItemShouldUseGravity=" + heldItemShouldUseGravity);
+        if (objToDrop != null)
+        {
+            objToDrop.ConnectedHand = null;
+            if (joint)
+            {
+                Destroy(joint);
+                joint = null;
+            }
+            objToDrop.Rigidbody.useGravity = heldItemShouldUseGravity;
+        }
+    }
+
+    private int DistanceCompare(Collider one, Collider two) 
+    {
+        var distOne = (one.transform.position - transform.position).sqrMagnitude;
+        var distTwo = (two.transform.position - transform.position).sqrMagnitude;
+        return distOne.CompareTo(distTwo);
+    }
+
     private IGrabbable SelectNearbyObject()
     {
         Collider[] nearHandObjects = Physics.OverlapSphere(transform.position + (0.05f * transform.forward) + (-0.05f * transform.up), 0.15f);
+        Array.Sort(nearHandObjects, DistanceCompare);
         foreach (Collider col in nearHandObjects)
         {
             //Debugging the 'Catch" collider range. Also a cool "painting" of cubes

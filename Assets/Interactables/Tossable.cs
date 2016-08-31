@@ -4,6 +4,8 @@ public class Tossable : MonoBehaviour, IGrabbable
 {
     private Rigidbody _rigidbody;
     private Throw _controller;
+    public bool moveToGrabberWhenGrabbed = true;
+    public float breakForce = Mathf.Infinity;
 
     void Awake()
     {
@@ -30,11 +32,17 @@ public class Tossable : MonoBehaviour, IGrabbable
 
     public bool MoveToGrabberWhenGrabbed
     {
-        get { return true; }
+        get { return moveToGrabberWhenGrabbed; }
+    }
+
+    public float BreakForce
+    {
+        get { return breakForce; }
     }
 
     public Throw ConnectedHand
     {
+        get { return _controller; }
         set { _controller = value; }
     }
 
@@ -46,6 +54,14 @@ public class Tossable : MonoBehaviour, IGrabbable
         if (_controller != null)
         {
             _controller.ForceFeedback(feedbackMultiplier * collision.relativeVelocity.magnitude);
+        }
+    }
+
+    public virtual void OnJointBreak(float breakForce)
+    {
+        if (_controller)
+        {
+            _controller.DropObject(this, breakForce);
         }
     }
 }
