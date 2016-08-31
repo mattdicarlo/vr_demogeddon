@@ -27,6 +27,7 @@ public class PokemonLoader : MonoBehaviour
         {
             pokeAnimator.SetBool("catch", true);
             hitBall.CatchAnimation();
+            Destroy(this, 3);
         }
     }
 }
