@@ -83,9 +83,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   potentialPokemon:
-  - {fileID: 1000010075141862, guid: 4583d098d68d346a3bec372073e525c0, type: 2}
+  - {fileID: 1000012326060534, guid: 5cb9ce94bfb8c49c7901eced59bf1940, type: 2}
+  - {fileID: 1000012133862814, guid: 65cc3cc750d774b05a8f7cb583bb6201, type: 2}
+  - {fileID: 1000010075141862, guid: 722319b322f16433d945137e2ba229d5, type: 2}
+  - {fileID: 1000010075141862, guid: 722319b322f16433d945137e2ba229d5, type: 2}
+  - {fileID: 1000010075141862, guid: 722319b322f16433d945137e2ba229d5, type: 2}
   - {fileID: 1000010075141862, guid: 722319b322f16433d945137e2ba229d5, type: 2}
   - {fileID: 100000, guid: d5d7cbb84860c4670af939242bdbd2d7, type: 3}
+  - {fileID: 100000, guid: d5d7cbb84860c4670af939242bdbd2d7, type: 3}
+  - {fileID: 100000, guid: d5d7cbb84860c4670af939242bdbd2d7, type: 3}
+  - {fileID: 100000, guid: d5d7cbb84860c4670af939242bdbd2d7, type: 3}
+  - {fileID: 100000, guid: d5d7cbb84860c4670af939242bdbd2d7, type: 3}
+  - {fileID: 1000010075141862, guid: 4583d098d68d346a3bec372073e525c0, type: 2}
+  - {fileID: 1000010075141862, guid: 4583d098d68d346a3bec372073e525c0, type: 2}
+  - {fileID: 1000010075141862, guid: 4583d098d68d346a3bec372073e525c0, type: 2}
+  - {fileID: 1000010075141862, guid: 4583d098d68d346a3bec372073e525c0, type: 2}
+  - {fileID: 1000012945862686, guid: 3065800ac8627460ab67c0d6f7820c75, type: 2}
+  - {fileID: 1000012945862686, guid: 3065800ac8627460ab67c0d6f7820c75, type: 2}
+  - {fileID: 1000012945862686, guid: 3065800ac8627460ab67c0d6f7820c75, type: 2}
+  - {fileID: 1000012945862686, guid: 3065800ac8627460ab67c0d6f7820c75, type: 2}
+  - {fileID: 1000012945862686, guid: 3065800ac8627460ab67c0d6f7820c75, type: 2}
 --- !u!114 &114000013844943854
 MonoBehaviour:
   m_ObjectHideFlags: 1
